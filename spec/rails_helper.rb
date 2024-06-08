@@ -1,5 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'pry'
 require 'simplecov'
 SimpleCov.start
 
@@ -13,6 +14,7 @@ VCR.configure do |config|
   config.cassette_library_dir = "fixtures/vcr_cassettes"
   config.hook_into :webmock
   config.filter_sensitive_data('<API_KEY>') { Rails.application.credentials.edamam[:api_key] }
+  config.filter_sensitive_data('<APP_ID>') { Rails.application.credentials.edamam[:app_id] }
   config.configure_rspec_metadata!
   config.allow_http_connections_when_no_cassette = true
 end
