@@ -1,7 +1,8 @@
-class RecipeSerivce
+class RecipeService
   def get_recipe(query)
     get_url("type=public&q=#{query}")
   end
+
   def get_url(url)
     response = conn.get(url)
     JSON.parse(response.body, symbolize_names: true)
