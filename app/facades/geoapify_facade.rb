@@ -1,9 +1,9 @@
 class GeoapifyFacade
-  def self.formatted_lat_and_long(country)
+  def formatted_lat_and_long(country)
     service = GeoapifyService.new
-    
-    unformatted_lat_and_long = service.search(country)
 
+    unformatted_lat_and_long = service.search(country)
+    
     lat = unformatted_lat_and_long[:results].first[:lat]
     long = unformatted_lat_and_long[:results].first[:lon]
 
@@ -15,7 +15,8 @@ class GeoapifyFacade
   private
 
   def format_data(sites)
-      data = sites[:features].first(10).map do |feature|
+    hash = {}
+    results = sites[:features].first(10).map do |feature|
       {
         id: nil,
         type: "tourist_site",
@@ -26,5 +27,6 @@ class GeoapifyFacade
         }
       }
     end
+    hash = { data: results }
   end
 end

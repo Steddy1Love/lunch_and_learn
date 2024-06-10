@@ -20,7 +20,6 @@ RSpec.describe GeoapifyService do
       lon = 2.3522
       service = GeoapifyService.new
       response = service.sites(lat, lon)
-
       expect(response).to be_a(Hash)
       expect(response[:features]).to be_an(Array)
       expect(response[:features].first[:properties]).to have_key(:name)

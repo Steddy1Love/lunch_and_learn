@@ -5,7 +5,9 @@ RSpec.describe GeoapifyFacade do
     it 'returns formatted tourist sites data' do
       country = 'France'
 
-      result = GeoapifyFacade.formatted_lat_and_long(country)
+      facade = GeoapifyFacade.new
+
+      result = facade.formatted_lat_and_long(country)
 
       expect(result.length).to eq(10)
       expect(result.first[:attributes][:name]).to be_present
