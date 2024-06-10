@@ -11,11 +11,12 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 
 VCR.configure do |config|
-  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.cassette_library_dir = "/spec/fixtures/vcr_cassettes"
   config.hook_into :webmock
   config.filter_sensitive_data('<APP_KEY>') { Rails.application.credentials.edamam[:api_key] }
   config.filter_sensitive_data('<APP_ID>') { Rails.application.credentials.edamam[:app_id] }
   config.filter_sensitive_data('<API_KEY>') { Rails.application.credentials.youtube[:api_key] }
+  config.filter_sensitive_data('<apiKEY>') { Rails.application.credentials.geoapify[:apiKey] }
   config.configure_rspec_metadata!
   config.allow_http_connections_when_no_cassette = true
 end
