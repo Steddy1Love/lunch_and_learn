@@ -26,12 +26,11 @@ RSpec.describe 'Tourist Sites API', type: :request do
       end
     end
 
-    context 'when no tourist sites are found', :vcr do
+    context 'when no tourist sites are found' do
       it 'returns an empty data array' do
         country = 'UnknownCountry'
 
         get '/api/v1/tourist_sites', params: { country: country }
-
         expect(response).to have_http_status(:not_found)
         json = JSON.parse(response.body, symbolize_names: true)
         expect(json[:data]).to eq([])

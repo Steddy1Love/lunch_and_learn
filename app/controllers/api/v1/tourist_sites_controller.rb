@@ -1,15 +1,16 @@
 class Api::V1::TouristSitesController < ApplicationController
   def index
-    country = params[:country].presence
+    country = params[:country]
 
     if country
-      begin
         facade = GeoapifyFacade.new
-        sites = facade.formatted_lat_and_long(country)
-        render json: sites, status: :ok
-      rescue StandardError => e
-        render json: { error: 'Unable to fetch tourist sites', message: e.message}, status: :internal_server_error
-      end
+        tourist_sites = facade.formatted_lat_and_long(country)
+        
+        if tourist_sites.empty?
+          render json: { data: [] }, status: :not_found
+        else
+          render json: { data: tourist_sites }, status: :ok
+        end
     else
       render json: { error: 'Country parameter is required' }, status: :bad_request
     end
