@@ -4,7 +4,8 @@ RSpec.describe GeoapifyService do
   describe '.search', :vcr do
     it 'returns latitude and longitude for a given country' do
       country = 'France'
-      response = GeoapifyService.search(country)
+      service = GeoapifyService.new
+      response = service.search(country)
 
       expect(response).to be_a(Hash)
       expect(response[:results]).to be_an(Array)
@@ -17,7 +18,8 @@ RSpec.describe GeoapifyService do
     it 'returns tourist sites for given latitude and longitude' do
       lat = 48.8566
       lon = 2.3522
-      response = GeoapifyService.sites(lat, lon)
+      service = GeoapifyService.new
+      response = service.sites(lat, lon)
 
       expect(response).to be_a(Hash)
       expect(response[:features]).to be_an(Array)

@@ -1,11 +1,13 @@
 class GeoapifyFacade
   def self.formatted_lat_and_long(country)
-    unformatted_lat_and_long = GeoapifyService.search(country)
+    service = GeoapifyService.new
+    
+    unformatted_lat_and_long = service.search(country)
 
     lat = unformatted_lat_and_long[:results].first[:lat]
     long = unformatted_lat_and_long[:results].first[:lon]
 
-    sites = GeoapifyService.sites(lat,long)
+    sites = service.sites(lat,long)
 
     format_data(sites)
   end
