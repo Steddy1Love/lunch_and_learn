@@ -1,11 +1,10 @@
 class Api::V1::RecipesController < ApplicationController
   def index
-    binding.pry
-    country = params[:country].presence || random_country
+    country = params[:country].presence 
     recipes = fetch_recipes(country)
 
     if recipes.empty?
-      render json: { data: [] }, status: :not_found
+      render json: { data: [] }, status: :ok
     else
       render json: format_recipes(recipes), status: :ok
     end
@@ -13,9 +12,9 @@ class Api::V1::RecipesController < ApplicationController
 
   private
 
-  def random_country
-    RestCountriesService.new.random_country_name
-  end
+  # def random_country
+  #   RestCountriesService.new.random_country_name
+  # end
 
   def fetch_recipes(country)
     service = RecipeService.new
@@ -26,13 +25,13 @@ class Api::V1::RecipesController < ApplicationController
   def format_recipes(recipes)
     recipes.map do |recipe|
       {
-        id: recipe['recipe']['uri'],
+        id: nil,
         type: 'recipe',
         attributes: {
           recipe_title: recipe['recipe']['label'],
           image: recipe['recipe']['image'],
-          recipe_link: recipe['recipe']['url'],
-          binding.pry
+          recipe_link: recipe['recipe']['url']
+          
         }
       }
     end

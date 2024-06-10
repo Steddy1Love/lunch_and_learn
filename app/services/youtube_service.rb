@@ -7,12 +7,12 @@ class YoutubeService
       order: 'relevance',
       type: 'video',
       videoEmbeddable: true,
-      q: query_keywords,
+      q: "#{query_keywords} history",
       videoDuration: video_duration
     }
 
     response = call_api(url, params)
-    parse_response(response)
+    parse_video_response(response)
   end
 
   private
@@ -30,23 +30,14 @@ class YoutubeService
     Faraday.new('https://www.googleapis.com/youtube/v3')
   end
 
-  def self.parse_response(response)
-    if response.key?(:error)
-      error_message = response[:error][:message]
-      raise StandardError, "YouTube API error: #{error_message}"
-    else
-      items = response[:items] || []
-      items.map do |item|
-        YoutubeVideo.new(
-          id: { videoId: item[:id][:videoId] },
-          snippet: item[:snippet],
-          contentDetails: item[:contentDetails], # Add this line to include contentDetails
-          title: item[:snippet][:title],
-          url: "https://www.youtube.com/watch?v=#{item[:id][:videoId]}",
-          duration: item[:contentDetails]&.dig(:duration), # Safely access duration if available
-          thumbnail_url: item[:snippet][:thumbnails][:default][:url]
-        )
-      end
-    end
+  def parse_video_response(response)
+    data = JSON.parse(response.body, symbolize_names: true)
+    return if data[:items].blank?
+
+    video = data[:items].first
+    {
+      title: video[:snippet][:title],
+      youtube_video_id: video[:id][:videoId]
+    }
   end
 end
