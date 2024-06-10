@@ -1,6 +1,6 @@
 class GeoapifyFacade
-  def formatted_lat_and_long
-    unformatted_lat_and_long = GeoapifyService.search(params[:country])
+  def self.formatted_lat_and_long(country)
+    unformatted_lat_and_long = GeoapifyService.search(country)
 
     lat = unformatted_lat_and_long[:results].first[:lat]
     long = unformatted_lat_and_long[:results].first[:lon]
