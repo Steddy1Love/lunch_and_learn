@@ -1,5 +1,5 @@
 class YoutubeService
-  def self.search(query_keywords, video_duration)
+  def search(query_keywords, video_duration)
     url = 'search'
     params = {
       part: 'snippet',
@@ -7,7 +7,7 @@ class YoutubeService
       order: 'relevance',
       type: 'video',
       videoEmbeddable: true,
-      q: "#{query_keywords} history",
+      q: "#{query_keywords}",
       videoDuration: video_duration
     }
 
@@ -17,27 +17,29 @@ class YoutubeService
 
   private
 
-  def self.call_api(url, params = {})
+  def call_api(url, params = {})
     response = connection.get(url) do |request|
       request.params = params
-      request.params[:key] = Rails.application.credentials.google[:api_key]
+      request.params[:key] = Rails.application.credentials.youtube[:api_key]
     end
 
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.connection
+  def connection
     Faraday.new('https://www.googleapis.com/youtube/v3')
   end
 
   def parse_video_response(response)
-    data = JSON.parse(response.body, symbolize_names: true)
-    return if data[:items].blank?
-
-    video = data[:items].first
-    {
-      title: video[:snippet][:title],
-      youtube_video_id: video[:id][:videoId]
-    }
+    if response
+      binding.pry
+      response[:items].first
+      {
+        title: video[:snippet][:title],
+        youtube_video_id: video[:id][:videoId]
+      }
+    else
+      {}
+    end 
   end
 end
