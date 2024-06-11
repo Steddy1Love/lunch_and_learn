@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :users, only: [:create]
   post 'login', to: 'sessions#create'
 
   namespace :api do
     namespace :v1 do
       resources :recipes, only: [:index]
       resources :learning_resources, only: [:index]
+      resources :users, only: [:create]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
