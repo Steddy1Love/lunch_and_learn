@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :learning_resources, only: [:index]
       resources :users, only: [:create]
       resources :sessions, only: [:create]
-      resources :favorites, only: [:create]
+      resources :favorites, only: [:create, :index]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
