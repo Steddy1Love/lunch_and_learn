@@ -15,9 +15,8 @@ RSpec.describe 'User Registration API', type: :request do
       it 'creates a new user' do
         post '/api/v1/users', params: valid_attributes.to_json, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
-        # expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:created)
         json = JSON.parse(response.body, symbolize_names: true)
-        binding.pry
         expect(json[:data][:type]).to eq('user')
         expect(json[:data][:id]).to be_present
         expect(json[:data][:attributes][:name]).to eq('Odell')
@@ -27,6 +26,15 @@ RSpec.describe 'User Registration API', type: :request do
     end
 
     context 'when the email is already taken' do
+      let(:valid_attributes) do
+        {
+          name: 'Odell',
+          email: 'goodboy@ruffruff.com',
+          password: 'treats4lyf',
+          password_confirmation: 'treats4lyf'
+        }
+      end
+      
       let(:invalid_attributes) do
         {
           name: 'Odell',
@@ -35,8 +43,9 @@ RSpec.describe 'User Registration API', type: :request do
           password_confirmation: 'treats4lyf'
         }
       end
-
+          
       it 'returns a validation failure message' do
+        post '/api/v1/users', params: valid_attributes.to_json, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
         post '/api/v1/users', params: invalid_attributes.to_json, headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
 
         expect(response).to have_http_status(:unprocessable_entity)

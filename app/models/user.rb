@@ -7,11 +7,6 @@ class User < ApplicationRecord
   validates :password, presence: true, confirmation: true
   validates :password_confirmation, presence: true
 
-  def initialize(user_params)
-    @name = user_params[:name]
-    @email = user_params[:email]
-    @password = user_params[:password]
-  end
   private
 
   def generate_api_key
