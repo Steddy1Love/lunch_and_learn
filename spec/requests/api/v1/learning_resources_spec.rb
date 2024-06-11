@@ -4,12 +4,12 @@ RSpec.describe 'Learning Resources API', type: :request do
   describe 'GET /api/v1/learning_resources' do
     context 'when resources are found' do
       it 'returns learning resources for the given country' do
-        allow_any_instance_of(YouTubeService).to receive(:get_video_by_country).and_return({
+        allow_any_instance_of(YouTubeService).to receive(:searches).and_return({
           title: 'A Super Quick History of Laos',
           youtube_video_id: 'uw8hjVqxMXw'
         })
 
-        allow_any_instance_of(PexelService).to receive(:get_images_by_country).and_return([
+        allow_any_instance_of(PexelService).to receive(:searches).and_return([
           {
             alt_tag: 'standing statue and temples landmark during daytime',
             url: 'https://www.pexel.com/photo-1528181304800-259b08848526?ixid=MnwzNzg2NzV8MHwxfHNlYXJjaHwxfHx0aGFpbGFuZHxlbnwwfHx8fDE2Njc4Njk1NTA&ixlib=rb-4.0.3'
@@ -32,8 +32,8 @@ RSpec.describe 'Learning Resources API', type: :request do
 
     context 'when no resources are found' do
       it 'returns empty video and images' do
-        allow_any_instance_of(YouTubeService).to receive(:get_video_by_country).and_return(nil)
-        allow_any_instance_of(PexelService).to receive(:get_images_by_country).and_return([])
+        allow_any_instance_of(YouTubeService).to receive(:searches).and_return(nil)
+        allow_any_instance_of(PexelService).to receive(:searches).and_return([])
 
         get '/api/v1/learning_resources', params: { country: 'unknown' }
 

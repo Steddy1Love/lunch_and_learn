@@ -1,16 +1,14 @@
 class PexelService
-  def self.search(query)
+  def search(query)
     get_url("query=#{query}")
   end
-  
-  private 
 
   def get_url(url)
     response = conn.get(url)
     data = JSON.parse(response.body, symbolize_names: true)
     return [] if data[:results].blank?
 
-    data[:photos].map do |image|
+    data[:photos].first(10).map do |image|
       {
         alt_tag: image[:alt]
         url: image[:src][:original]
