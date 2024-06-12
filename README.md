@@ -47,6 +47,7 @@ This project may require external API keys. You can obtain them from:
 Create a .env file in the root directory and add your API keys:
 
 GEOAPIFY_API_KEY=your_geoapify_api_key
+
 OTHER_API_KEYS=your_other_api_key
 
 ### Start the Server
