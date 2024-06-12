@@ -3,12 +3,12 @@
 Lunch and Learn is a Rails-based API that allows users to register, authenticate, and manage their favorite recipes. The API provides endpoints for user registration, user sessions, and managing favorites.
 
 ## Learning Goals
-- Understand and implement authentication and authorization in a Rails API.
-- Utilize BCrypt for password encryption.
-- Implement secure API key generation and management.
-- Handle JSON payloads in HTTP requests.
-- Manage one-to-many relationships in a database (User -> Favorites).
-- Write RSpec tests for API endpoints.
+- Expose an API that aggregates data from multiple external APIs
+- Expose an API that requires an authentication token
+- Implement Basic Authentication
+- Expose an API for CRUD functionality
+- Determine completion criteria based on the needs of other developers
+- Test both API consumption and exposure, making use of at least one mocking tool (VCR, Webmock, etc).
 
 ## Setup Instructions
 ### Prerequisites
