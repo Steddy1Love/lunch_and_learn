@@ -77,8 +77,8 @@ Response:
 ```json
 {
   "data": {
-    "type": "user",
     "id": "1",
+    "type": "user",
     "attributes": {
       "name": "Odell",
       "email": "goodboy@ruffruff.com",
@@ -105,8 +105,8 @@ Response:
 ```json
 {
   "data": {
-    "type": "user",
     "id": "1",
+    "type": "user",
     "attributes": {
       "name": "Odell",
       "email": "goodboy@ruffruff.com",
